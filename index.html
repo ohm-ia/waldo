@@ -4,12 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Waldo Gallardo · Ingeniero Civil Eléctrico</title>
-<meta name="description" content="Tarjeta de contacto de Waldo Gallardo, Ingeniero Civil Eléctrico e instalador eléctrico autorizado SEC clase A.">
-<meta name="theme-color" content="#000000">
+<meta name="description" content="Contacto de Waldo Gallardo, Ingeniero Civil Eléctrico e instalador eléctrico autorizado SEC clase A.">
 <meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#000000">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000">
+<meta name="color-scheme" content="dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Sora:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=Sora:wght@400;600&display=swap">
 
 <script>
 /* =========================================================
@@ -19,7 +21,6 @@
 const TARJETA = {
   nombre: "Waldo Gallardo",
   profesion: "Ingeniero Civil Eléctrico",
-  credencial: "Instalador eléctrico autorizado SEC, clase A",
 
   telefono: "+56951318794",          // sin espacios, con +56
   telefonoVisible: "+56 9 5131 8794", // como se lee en pantalla
@@ -29,7 +30,8 @@ const TARJETA = {
   linkedin: "",    // enlace completo, ej: "https://www.linkedin.com/in/..."
   instagram: "",   // enlace completo
 
-  verificarSEC: "https://www.sec.cl/area-ciudadana/nuevo-buscador-de-instaladores-e-instaladoras/",
+  verificarSEC: "https://wlhttp.sec.cl/validadorInstaladores/sec/consulta.do",
+  apellidosSEC: "Gallardo Vega", // cómo buscarlo en el validador
 
   // Datos para transferir: la sección aparece solo si numeroCuenta tiene algo.
   transferencia: {
@@ -47,139 +49,239 @@ const TARJETA = {
 :root {
   --negro: #000000;
   --blanco: #ffffff;
-  --gris-claro: #c9c9c9;
-  --gris: #9a9a9a;
-  --linea: #3a3a3a;
-  --superficie: #141414;
+  --texto-1: #d6d6d6;
+  --texto-2: #8f8f8f;
+  --superficie: #111111;
+  --superficie-2: #1d1d1d;
+  --borde: #262626;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   color-scheme: dark;
-  box-sizing: border-box;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
-*, *::before, *::after { box-sizing: inherit; }
-html { background: var(--negro); }
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  background: var(--negro);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
 body {
   margin: 0;
   background: var(--negro);
-  color: var(--blanco);
+  color: var(--texto-1);
   font-family: "Sora", "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
-  line-height: 1.55;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
-.tarjeta {
-  max-width: 440px;
+a, button { touch-action: manipulation; }
+
+/* ---------- Estructura ---------- */
+.escena { min-height: 100svh; }
+.portada {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  max-width: 560px;
   margin: 0 auto;
-  padding: 8px 24px 48px;
+  margin-top: env(safe-area-inset-top, 0px);
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 55%, transparent 100%);
+          mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 55%, transparent 100%);
+}
+.placa { display: block; width: 100%; height: 100%; }
+.contenido {
+  position: relative;
+  max-width: 460px;
+  margin: 24px auto 0;
+  padding: 0 20px calc(40px + env(safe-area-inset-bottom, 0px));
 }
 
-/* Circuito */
-.circuito { display: block; width: 100%; height: auto; margin: 8px 0 28px; }
-.circuito .traza { fill: none; stroke-linecap: round; stroke-linejoin: round; }
-.circuito .base { stroke: #3d3d3d; stroke-width: 4; }
-.circuito .cobre { stroke: #e8e8e8; stroke-width: 1.5; }
-.circuito .pad, .circuito .pin { fill: url(#metal); }
-.circuito .hoyo { fill: #000; }
-.circuito .comp { fill: url(#cuerpo); stroke: #6e6e6e; stroke-width: 0.8; }
-.circuito .chip { fill: url(#encapsulado); stroke: #8c8c8c; stroke-width: 1.2; }
-.circuito .bisel { stroke: #4a4a4a; stroke-width: 1; }
-.circuito .marca { fill: #3a3a3a; }
-.circuito .letra { fill: none; stroke: #f2f2f2; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
-.circuito .pad-letra { fill: url(#metal); }
-.circuito .pulso { fill: none; stroke: #ffffff; stroke-width: 2.6; stroke-linecap: round; stroke-dasharray: 0.045 0.955; stroke-dashoffset: 0.045; opacity: 0; filter: url(#brillo); }
-.circuito .letra-pulso { stroke-width: 9; }
-@media (prefers-reduced-motion: no-preference) {
-  .circuito .traza { stroke-dasharray: 1; stroke-dashoffset: 1; animation: encender 1.1s ease-out 0.15s forwards; }
-  .circuito .pulso { animation-name: viajar; animation-timing-function: ease-in; animation-iteration-count: infinite; }
-  @keyframes encender { to { stroke-dashoffset: 0; } }
-  @keyframes viajar {
-    0% { stroke-dashoffset: 0.045; opacity: 1; }
-    70% { stroke-dashoffset: -1; opacity: 1; }
-    71%, 100% { stroke-dashoffset: -1; opacity: 0; }
+@media (min-width: 900px) {
+  .escena {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    align-items: center;
   }
+  .portada {
+    height: auto;
+    aspect-ratio: 4 / 3;
+    max-height: 92svh;
+    -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%);
+            mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%);
+  }
+  .contenido { margin: 0; padding: 64px 56px 64px 0; max-width: 500px; }
+  h1 { font-size: 64px; }
 }
 
-/* Encabezado */
+/* ---------- Placa ---------- */
+.placa .t, .placa .l { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.placa .t { stroke: #262626; stroke-width: 2.4; }
+.placa .t.tp { stroke-width: 4; }
+.placa .l { stroke: #f2f2f2; stroke-width: 1.3; }
+.placa .l.lp { stroke-width: 2.4; }
+.placa .estano { fill: url(#estano); }
+.placa .hoyo { fill: #000; }
+.placa .serigrafia { fill: none; stroke: #e6e6e6; stroke-width: 0.8; opacity: 0.75; }
+.placa .rotulo { fill: #e6e6e6; opacity: 0.75; font: 600 7.5px "IBM Plex Sans Condensed", "Arial Narrow", Arial, sans-serif; letter-spacing: 0.04em; }
+.placa .cuerpo { fill: #151515; stroke: #2c2c2c; stroke-width: 1; }
+.placa .marca { fill: #0a0a0a; stroke: #2a2a2a; stroke-width: 0.8; }
+.placa .grabado { fill: #b8b8b8; font-family: "IBM Plex Sans Condensed", "Arial Narrow", Arial, sans-serif; }
+.placa .grabado.grande { font-size: 28px; font-weight: 600; letter-spacing: 0.04em; fill: #dedede; }
+.placa .grabado.chico { font-size: 7px; font-weight: 500; letter-spacing: 0.14em; }
+.placa .lente { fill: #13241a; }
+.placa .pulso { fill: none; stroke: #ffffff; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 0.08 1; stroke-dashoffset: 0.08; opacity: 0; filter: url(#brillo); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .placa .l {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: corriente 1200ms var(--ease-in-out) both;
+  }
+  .placa .l.lp { animation-duration: 1200ms; }
+  .placa .led-luz {
+    opacity: 0;
+    animation: led-on 400ms var(--ease-out) 2.9s forwards, latido 3.2s ease-in-out 3.9s infinite;
+  }
+  .placa .pulso { animation: viajar 8.4s var(--ease-in-out) infinite; }
+  @keyframes viajar {
+    0% { stroke-dashoffset: 0.08; opacity: 1; }
+    15.5% { stroke-dashoffset: -1; opacity: 1; }
+    15.6%, 100% { stroke-dashoffset: -1; opacity: 0; }
+  }
+  .pista .viva { stroke-dasharray: 1; stroke-dashoffset: 1; animation: corriente 1200ms var(--ease-in-out) 2.2s both; }
+  .pista .senal { animation: senal 8.4s var(--ease-in-out) 11.4s infinite; }
+  @keyframes senal {
+    0% { stroke-dashoffset: 0.06; opacity: 1; }
+    15.5% { stroke-dashoffset: -1; opacity: 1; }
+    15.6%, 100% { stroke-dashoffset: -1; opacity: 0; }
+  }
+  .soldadura { opacity: 0; animation: led-on 400ms var(--ease-out) 2.1s forwards; }
+  @keyframes corriente { to { stroke-dashoffset: 0; } }
+  @keyframes led-on { to { opacity: 1; } }
+  @keyframes latido { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
+
+  .entra { animation: subir 320ms var(--ease-out) both; animation-delay: calc(120ms + var(--i, 0) * 55ms); }
+  @keyframes subir { from { opacity: 0; transform: translateY(8px); } }
+}
+@media (prefers-reduced-motion: reduce) {
+  .entra { animation: aparecer 200ms ease both; }
+  @keyframes aparecer { from { opacity: 0; } }
+}
+
+/* ---------- Identidad ---------- */
 h1 {
   margin: 0;
-  font-family: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
-  font-weight: 700;
-  font-size: clamp(40px, 12vw, 52px);
+  font-family: "IBM Plex Sans Condensed", "Arial Narrow", Arial, sans-serif;
+  font-weight: 600;
+  font-size: clamp(38px, 12.4vw, 56px);
   line-height: 0.95;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  color: #e6e6e6;
 }
-.profesion { margin: 12px 0 0; font-size: 19px; color: #e6e6e6; }
-.credencial {
-  display: flex; align-items: center; gap: 10px;
-  margin: 22px 0 0; padding-top: 16px;
-  border-top: 1px solid var(--linea);
-  font-size: 14px; color: var(--gris-claro);
-}
-.credencial svg { flex: none; }
+.profesion { margin: 2px 0 0; font-family: "IBM Plex Sans Condensed", "Arial Narrow", Arial, sans-serif; font-weight: 400; font-size: 20px; color: #b3b3b3; }
 
-/* Botones */
-.acciones { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 32px; }
-.boton {
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  min-height: 54px; padding: 12px 16px;
-  border: 1.5px solid var(--blanco); border-radius: 10px;
-  background: transparent; color: var(--blanco);
-  font: 600 15px/1.2 "Sora", Arial, sans-serif;
-  text-decoration: none; cursor: pointer;
+/* ---------- Filas de acción ---------- */
+.grupo { display: grid; gap: 10px; margin-top: 28px; }
+.accion {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) 18px;
+  align-items: center;
+  gap: 14px;
+  min-height: 68px;
+  padding: 12px 16px;
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+  background: var(--superficie);
+  color: var(--texto-1);
+  text-decoration: none;
+  position: relative;
+  font: inherit;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  transition: transform 140ms var(--ease-out), background-color 140ms ease;
 }
-.boton:hover { background: var(--superficie); }
-.boton.principal { grid-column: 1 / -1; background: var(--blanco); color: var(--negro); font-size: 16px; min-height: 58px; }
-.boton.principal:hover { background: #e6e6e6; }
-.boton.ancho { grid-column: 1 / -1; }
-.boton svg { flex: none; }
+.accion:active { transform: scale(0.97); }
+.icono {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--texto-1);
+}
+.textos { display: grid; gap: 1px; min-width: 0; }
+.titulo { font-weight: 600; font-size: 16px; line-height: 1.3; }
+.detalle { font-size: 13px; line-height: 1.35; color: var(--texto-2); overflow-wrap: anywhere; }
+.flecha { color: #6b6b6b; }
+
+.accion.principal { background: #0b0b0b; border-color: transparent; }
+.pista { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.pista rect { fill: none; stroke-linecap: round; }
+.pista .base { stroke: var(--borde); stroke-width: 1; }
+.pista .viva { stroke: #d6d6d6; stroke-width: 1.2; }
+.pista .senal { stroke: #ffffff; stroke-width: 1.8; stroke-dasharray: 0.06 1; stroke-dashoffset: 0.06; opacity: 0; filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.8)); }
+.soldadura { position: absolute; left: -4px; top: 50%; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; background: #d6d6d6; box-shadow: inset 0 0 0 2px #0b0b0b; pointer-events: none; }
+
+.accion.sello { background: transparent; min-height: 60px; }
+.nota { margin: -2px 0 0; padding: 0 16px; font-size: 13px; line-height: 1.4; color: var(--texto-2); }
+
+@media (hover: hover) and (pointer: fine) {
+  .accion:hover { background: #181818; }
+  .accion.principal:hover { background: #121212; }
+  .accion.sello:hover { background: var(--superficie); }
+}
 a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--blanco); outline-offset: 3px; }
 
-/* Secciones */
-section { margin-top: 44px; }
-h2 {
-  display: flex; align-items: center; gap: 12px;
-  margin: 0 0 16px;
-  font-family: "Space Grotesk", Arial, sans-serif;
-  font-weight: 500; font-size: 21px; line-height: 1.2;
+/* ---------- Transferencia ---------- */
+details.accion { display: block; padding: 0; min-height: 0; cursor: default; }
+details.accion:active { transform: none; }
+details summary {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) 18px;
+  align-items: center;
+  gap: 14px;
+  min-height: 68px;
+  padding: 12px 16px;
+  cursor: pointer;
+  list-style: none;
 }
-h2::after { content: ""; flex: 1; height: 1px; background: var(--linea); }
-.texto { margin: 0 0 16px; color: var(--gris-claro); font-size: 15px; }
-
-/* Transferencia */
-details { border: 1px solid var(--linea); border-radius: 10px; background: var(--superficie); }
-summary {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  min-height: 54px; padding: 12px 16px;
-  font-weight: 600; font-size: 15px; cursor: pointer; list-style: none;
+details summary::-webkit-details-marker { display: none; }
+details .flecha { transition: transform 200ms var(--ease-out); }
+details[open] .flecha { transform: rotate(90deg); }
+.datos { margin: 0; padding: 0 16px 4px; }
+.datos div { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--borde); font-size: 14px; }
+.datos dt { color: var(--texto-2); }
+.datos dd { margin: 0; text-align: right; overflow-wrap: anywhere; -webkit-user-select: text; user-select: text; }
+.copiar {
+  display: block; width: calc(100% - 32px); margin: 8px 16px 16px; min-height: 48px;
+  border: 1px solid var(--borde); border-radius: 12px; background: var(--superficie-2);
+  color: var(--blanco); font: 600 15px/1 "Sora", Arial, sans-serif; cursor: pointer;
+  transition: transform 140ms var(--ease-out);
 }
-summary::-webkit-details-marker { display: none; }
-summary .flecha { transition: transform 0.2s ease; }
-details[open] summary .flecha { transform: rotate(180deg); }
-.datos { margin: 0; padding: 0 16px 4px; display: grid; gap: 0; }
-.datos div { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--linea); font-size: 14px; }
-.datos dt { color: var(--gris); }
-.datos dd { margin: 0; text-align: right; overflow-wrap: anywhere; }
-.copiar { margin: 12px 16px 16px; width: calc(100% - 32px); }
+.copiar:active { transform: scale(0.97); }
 
-/* Pie */
-footer { margin-top: 48px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
-.enlace-texto {
-  display: inline-flex; align-items: center; gap: 8px;
-  min-height: 44px; padding: 0;
-  border: 0; background: none; color: var(--blanco);
-  font: 600 15px/1.2 "Sora", Arial, sans-serif;
-  text-decoration: underline; text-underline-offset: 4px; cursor: pointer;
+/* ---------- Pie ---------- */
+.pie { display: flex; justify-content: center; margin-top: 32px; }
+.compartir {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px;
+  border: 0; border-radius: 999px; background: transparent; color: var(--texto-2);
+  font: 600 14px/1 "Sora", Arial, sans-serif; cursor: pointer;
+  transition: transform 140ms var(--ease-out), color 140ms ease;
 }
+.compartir:active { transform: scale(0.97); }
+@media (hover: hover) and (pointer: fine) { .compartir:hover { color: var(--blanco); } }
 
-/* Aviso */
 .aviso {
   position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px));
-  transform: translate(-50%, 20px); opacity: 0;
-  padding: 12px 18px; border-radius: 10px;
-  background: var(--blanco); color: var(--negro);
-  font-weight: 600; font-size: 14px;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform: translate(-50%, 12px); opacity: 0;
+  padding: 12px 18px; border-radius: 12px;
+  background: var(--blanco); color: var(--negro); font-weight: 600; font-size: 14px;
+  transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out);
   pointer-events: none;
 }
 .aviso.visible { opacity: 1; transform: translate(-50%, 0); }
@@ -187,294 +289,216 @@ footer { margin-top: 48px; display: flex; flex-direction: column; align-items: f
 </style>
 </head>
 <body>
-<main class="tarjeta">
+<div class="escena">
+  <div class="portada">
+      <svg class="placa" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <defs>
+  <radialGradient id="mascara" cx="50%" cy="46%" r="65%"><stop offset="0" stop-color="#121212"/><stop offset="1" stop-color="#000"/></radialGradient>
+  <radialGradient id="halo" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#3ddc84" stop-opacity="0.55"/><stop offset="1" stop-color="#3ddc84" stop-opacity="0"/></radialGradient>
+  <filter id="brillo" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="1.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <linearGradient id="estano" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2e2e2"/><stop offset="1" stop-color="#9c9c9c"/></linearGradient>
+</defs>
+      <rect width="400" height="300" fill="url(#mascara)"/>
+      <path class="t" d="M168.5 85V72L156.5 60H63"/>
+      <path class="t" d="M177.5 85V63L165.5 51H0"/>
+      <path class="t" d="M186.5 85V54L174.5 42H0"/>
+      <path class="t" d="M195.5 85V45L183.5 33H99"/>
+      <path class="t" d="M204.5 85V0"/>
+      <path class="t" d="M213.5 85V0"/>
+      <path class="t" d="M222.5 85V62L240.5 44V0"/>
+      <path class="t" d="M231.5 85V71L249.5 53V25"/>
+      <path class="t" d="M249.5 7V0"/>
+      <path class="t" d="M255 108.5H280L308 80.5H400"/>
+      <path class="t" d="M255 117.5H289L317 89.5H400"/>
+      <path class="t" d="M255 126.5H328"/>
+      <path class="t" d="M362 126.5H400"/>
+      <path class="t" d="M255 135.5H328"/>
+      <path class="t" d="M255 144.5H298"/>
+      <path class="t" d="M318 144.5H400"/>
+      <path class="t" d="M255 153.5H293L321 181.5H400"/>
+      <path class="t" d="M255 162.5H284L312 190.5H400"/>
+      <path class="t" d="M255 171.5H275L303 199.5H400"/>
+      <path class="t" d="M231.5 195V206L261.5 236H319"/>
+      <path class="t" d="M341 236H351"/>
+      <path class="t" d="M369 236H400"/>
+      <path class="t" d="M222.5 195V215L252.5 245H301"/>
+      <path class="t" d="M213.5 195V300"/>
+      <path class="t" d="M204.5 195V300"/>
+      <path class="t" d="M195.5 195V221"/>
+      <path class="t" d="M186.5 195V300"/>
+      <path class="t" d="M177.5 195V300"/>
+      <path class="t tp" d="M64 258H156.5L168.5 246V195"/>
+      <path class="t tp" d="M48 258V210L86.5 171.5H145"/>
+      <path class="t" d="M145 162.5H0"/>
+      <path class="t" d="M145 153.5H99"/>
+      <path class="t" d="M145 144.5H58"/>
+      <path class="t" d="M38 144.5H0"/>
+      <path class="t" d="M145 135.5H117"/>
+      <path class="t" d="M145 126.5H0"/>
+      <path class="t" d="M145 117.5H118L88 87.5H0"/>
+      <path class="t" d="M145 108.5H128L97.5 78H0"/>
+      <path class="l" pathLength="1" style="animation-delay:0.3s" d="M168.5 85V72L156.5 60H63"/>
+      <path class="l" pathLength="1" style="animation-delay:0.34s" d="M177.5 85V63L165.5 51H0"/>
+      <path class="l" pathLength="1" style="animation-delay:0.38s" d="M186.5 85V54L174.5 42H0"/>
+      <path class="l" pathLength="1" style="animation-delay:0.42s" d="M195.5 85V45L183.5 33H99"/>
+      <path class="l" pathLength="1" style="animation-delay:0.46s" d="M204.5 85V0"/>
+      <path class="l" pathLength="1" style="animation-delay:0.5s" d="M213.5 85V0"/>
+      <path class="l" pathLength="1" style="animation-delay:0.54s" d="M222.5 85V62L240.5 44V0"/>
+      <path class="l" pathLength="1" style="animation-delay:0.58s" d="M231.5 85V71L249.5 53V25"/>
+      <path class="l" pathLength="1" style="animation-delay:0.62s" d="M249.5 7V0"/>
+      <path class="l" pathLength="1" style="animation-delay:0.66s" d="M255 108.5H280L308 80.5H400"/>
+      <path class="l" pathLength="1" style="animation-delay:0.7s" d="M255 117.5H289L317 89.5H400"/>
+      <path class="l" pathLength="1" style="animation-delay:0.74s" d="M255 126.5H328"/>
+      <path class="l" pathLength="1" style="animation-delay:0.78s" d="M362 126.5H400"/>
+      <path class="l" pathLength="1" style="animation-delay:0.82s" d="M255 135.5H328"/>
+      <path class="l" pathLength="1" style="animation-delay:0.86s" d="M255 144.5H298"/>
+      <path class="l" pathLength="1" style="animation-delay:0.9s" d="M318 144.5H400"/>
+      <path class="l" pathLength="1" style="animation-delay:0.94s" d="M255 153.5H293L321 181.5H400"/>
+      <path class="l" pathLength="1" style="animation-delay:0.98s" d="M255 162.5H284L312 190.5H400"/>
+      <path class="l" pathLength="1" style="animation-delay:1.02s" d="M255 171.5H275L303 199.5H400"/>
+      <path class="l" pathLength="1" style="animation-delay:1.06s" d="M231.5 195V206L261.5 236H319"/>
+      <path class="l" pathLength="1" style="animation-delay:1.1s" d="M341 236H351"/>
+      <path class="l" pathLength="1" style="animation-delay:1.14s" d="M369 236H400"/>
+      <path class="l" pathLength="1" style="animation-delay:1.18s" d="M222.5 195V215L252.5 245H301"/>
+      <path class="l" pathLength="1" style="animation-delay:1.22s" d="M213.5 195V300"/>
+      <path class="l" pathLength="1" style="animation-delay:1.26s" d="M204.5 195V300"/>
+      <path class="l" pathLength="1" style="animation-delay:1.3s" d="M195.5 195V221"/>
+      <path class="l" pathLength="1" style="animation-delay:1.34s" d="M186.5 195V300"/>
+      <path class="l" pathLength="1" style="animation-delay:1.38s" d="M177.5 195V300"/>
+      <path class="l lp" pathLength="1" style="animation-delay:1.42s" d="M64 258H156.5L168.5 246V195"/>
+      <path class="l lp" pathLength="1" style="animation-delay:1.46s" d="M48 258V210L86.5 171.5H145"/>
+      <path class="l" pathLength="1" style="animation-delay:1.5s" d="M145 162.5H0"/>
+      <path class="l" pathLength="1" style="animation-delay:1.54s" d="M145 153.5H99"/>
+      <path class="l" pathLength="1" style="animation-delay:1.58s" d="M145 144.5H58"/>
+      <path class="l" pathLength="1" style="animation-delay:1.62s" d="M38 144.5H0"/>
+      <path class="l" pathLength="1" style="animation-delay:1.66s" d="M145 135.5H117"/>
+      <path class="l" pathLength="1" style="animation-delay:1.7s" d="M145 126.5H0"/>
+      <path class="l" pathLength="1" style="animation-delay:1.74s" d="M145 117.5H118L88 87.5H0"/>
+      <path class="l" pathLength="1" style="animation-delay:1.78s" d="M145 108.5H128L97.5 78H0"/>
+      <path class="pulso" pathLength="1" style="animation-delay:4.2s" d="M177.5 85V63L165.5 51H0"/>
+      <path class="pulso" pathLength="1" style="animation-delay:5.4s" d="M255 117.5H289L317 89.5H400"/>
+      <path class="pulso" pathLength="1" style="animation-delay:6.6s" d="M186.5 195V300"/>
+      <path class="pulso" pathLength="1" style="animation-delay:7.8s" d="M145 162.5H0"/>
+      <path class="pulso" pathLength="1" style="animation-delay:9.0s" d="M255 162.5H284L312 190.5H400"/>
+      <path class="pulso" pathLength="1" style="animation-delay:10.2s" d="M213.5 85V0"/>
+      <circle class="estano" cx="16" cy="16" r="8"/><circle class="hoyo" cx="16" cy="16" r="4.5"/>
+      <circle class="estano" cx="384" cy="16" r="8"/><circle class="hoyo" cx="384" cy="16" r="4.5"/>
+      <circle class="estano" cx="60" cy="60" r="3.4"/><circle class="hoyo" cx="60" cy="60" r="1.4"/>
+      <circle class="estano" cx="96" cy="33" r="3.4"/><circle class="hoyo" cx="96" cy="33" r="1.4"/>
+      <circle class="estano" cx="114" cy="135.5" r="3.4"/><circle class="hoyo" cx="114" cy="135.5" r="1.4"/>
+      <circle class="estano" cx="96" cy="153.5" r="3.4"/><circle class="hoyo" cx="96" cy="153.5" r="1.4"/>
+      <circle class="estano" cx="195.5" cy="224" r="3.4"/><circle class="hoyo" cx="195.5" cy="224" r="1.4"/>
+      <circle class="estano" cx="304" cy="245" r="3.4"/><circle class="hoyo" cx="304" cy="245" r="1.4"/>
+      <rect class="serigrafia" x="38" y="250" width="36" height="16" rx="1"/>
+      <rect class="estano" x="44" y="254" width="8" height="8" rx="1"/><circle class="estano" cx="64" cy="258" r="4"/>
+      <circle class="hoyo" cx="48" cy="258" r="1.6"/><circle class="hoyo" cx="64" cy="258" r="1.6"/>
+      <rect class="serigrafia" x="244" y="5" width="11" height="22" rx="1"/>
+      <rect class="estano" x="246" y="18" width="7" height="7" rx="1"/><rect class="estano" x="246" y="7" width="7" height="7" rx="1"/>
+      <rect class="serigrafia" x="37" y="139" width="22" height="11" rx="1"/><rect class="estano" x="38" y="141" width="7" height="7" rx="1"/><rect class="estano" x="51" y="141" width="7" height="7" rx="1"/>
+      <rect class="serigrafia" x="297" y="139" width="22" height="11" rx="1"/><rect class="estano" x="298" y="141" width="7" height="7" rx="1"/><rect class="estano" x="311" y="141" width="7" height="7" rx="1"/>
+      <rect class="serigrafia" x="349" y="230" width="22" height="12" rx="1"/><rect class="estano" x="350" y="232.5" width="7" height="7" rx="1"/><rect class="estano" x="363" y="232.5" width="7" height="7" rx="1"/>
+      <rect class="estano" x="328" y="116.0" width="7" height="3" rx="0.6"/><rect class="estano" x="355" y="116.0" width="7" height="3" rx="0.6"/>
+      <rect class="estano" x="328" y="125.0" width="7" height="3" rx="0.6"/><rect class="estano" x="355" y="125.0" width="7" height="3" rx="0.6"/>
+      <rect class="estano" x="328" y="134.0" width="7" height="3" rx="0.6"/><rect class="estano" x="355" y="134.0" width="7" height="3" rx="0.6"/>
+      <rect class="cuerpo" x="334" y="111" width="22" height="31" rx="1.5"/><circle class="marca" cx="338.5" cy="115.5" r="1.4"/>
+      <rect class="serigrafia" x="315" y="229" width="30" height="14" rx="1"/><rect class="estano" x="318" y="232.5" width="7" height="7" rx="1"/><rect class="estano" x="335" y="232.5" width="7" height="7" rx="1"/>
+      <rect class="lente" x="326" y="232" width="8" height="8" rx="1"/>
+      <g class="led-luz"><circle cx="330" cy="236" r="16" fill="url(#halo)"/><rect x="326" y="232" width="8" height="8" rx="1" fill="#3ddc84"/></g>
+      <rect class="estano" x="167.0" y="85" width="3" height="10" rx="0.6"/><rect class="estano" x="167.0" y="185" width="3" height="10" rx="0.6"/>
+      <rect class="estano" x="145" y="107.0" width="10" height="3" rx="0.6"/><rect class="estano" x="245" y="107.0" width="10" height="3" rx="0.6"/>
+      <rect class="estano" x="176.0" y="85" width="3" height="10" rx="0.6"/><rect class="estano" x="176.0" y="185" width="3" height="10" rx="0.6"/>
+      <rect class="estano" x="145" y="116.0" width="10" height="3" rx="0.6"/><rect class="estano" x="245" y="116.0" width="10" height="3" rx="0.6"/>
+      <rect class="estano" x="185.0" y="85" width="3" height="10" rx="0.6"/><rect class="estano" x="185.0" y="185" width="3" height="10" rx="0.6"/>
+      <rect class="estano" x="145" y="125.0" width="10" height="3" rx="0.6"/><rect class="estano" x="245" y="125.0" width="10" height="3" rx="0.6"/>
+      <rect class="estano" x="194.0" y="85" width="3" height="10" rx="0.6"/><rect class="estano" x="194.0" y="185" width="3" height="10" rx="0.6"/>
+      <rect class="estano" x="145" y="134.0" width="10" height="3" rx="0.6"/><rect class="estano" x="245" y="134.0" width="10" height="3" rx="0.6"/>
+      <rect class="estano" x="203.0" y="85" width="3" height="10" rx="0.6"/><rect class="estano" x="203.0" y="185" width="3" height="10" rx="0.6"/>
+      <rect class="estano" x="145" y="143.0" width="10" height="3" rx="0.6"/><rect class="estano" x="245" y="143.0" width="10" height="3" rx="0.6"/>
+      <rect class="estano" x="212.0" y="85" width="3" height="10" rx="0.6"/><rect class="estano" x="212.0" y="185" width="3" height="10" rx="0.6"/>
+      <rect class="estano" x="145" y="152.0" width="10" height="3" rx="0.6"/><rect class="estano" x="245" y="152.0" width="10" height="3" rx="0.6"/>
+      <rect class="estano" x="221.0" y="85" width="3" height="10" rx="0.6"/><rect class="estano" x="221.0" y="185" width="3" height="10" rx="0.6"/>
+      <rect class="estano" x="145" y="161.0" width="10" height="3" rx="0.6"/><rect class="estano" x="245" y="161.0" width="10" height="3" rx="0.6"/>
+      <rect class="estano" x="230.0" y="85" width="3" height="10" rx="0.6"/><rect class="estano" x="230.0" y="185" width="3" height="10" rx="0.6"/>
+      <rect class="estano" x="145" y="170.0" width="10" height="3" rx="0.6"/><rect class="estano" x="245" y="170.0" width="10" height="3" rx="0.6"/>
+      <rect class="cuerpo chip" x="154" y="94" width="92" height="92" rx="3"/>
+      <circle class="marca" cx="163" cy="103" r="2.6"/>
+      <text class="grabado chico" x="200" y="127" text-anchor="middle">ING · ELÉCTRICO</text>
+      <text class="grabado grande" x="200" y="155" text-anchor="middle">WG</text>
+      <text class="grabado chico" x="200" y="171" text-anchor="middle">SEC-A 2026</text>
+      <text class="rotulo" x="258" y="92" text-anchor="start">U1</text>
+      <text class="rotulo" x="345" y="106" text-anchor="middle">U2</text>
+      <text class="rotulo" x="259" y="19" text-anchor="start">R1</text>
+      <text class="rotulo" x="360" y="253" text-anchor="middle">R3</text>
+      <text class="rotulo" x="48" y="135" text-anchor="middle">C1</text>
+      <text class="rotulo" x="330" y="224" text-anchor="middle">LED1</text>
+      <text class="rotulo" x="330" y="254" text-anchor="middle">PWR</text>
+      <text class="rotulo" x="33" y="262" text-anchor="end">J1</text>
+      <text class="rotulo" x="48" y="277" text-anchor="middle">+</text>
+      <text class="rotulo" x="64" y="277" text-anchor="middle">−</text>
+      </svg>
+  </div>
 
-  <svg class="circuito" viewBox="0 0 400 240" aria-hidden="true">
-    <defs>
-      <radialGradient id="placa" cx="50%" cy="50%" r="60%"><stop offset="0" stop-color="#1b1b1b"/><stop offset="0.75" stop-color="#000"/></radialGradient>
-      <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="0.5" stop-color="#bdbdbd"/><stop offset="1" stop-color="#7a7a7a"/></linearGradient>
-      <linearGradient id="cuerpo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c2c2c"/><stop offset="1" stop-color="#070707"/></linearGradient>
-      <linearGradient id="encapsulado" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#262626"/><stop offset="1" stop-color="#030303"/></linearGradient>
-      <filter id="sombra" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.9"/></filter>
-      <filter id="brillo" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    </defs>
-    <rect x="0" y="0" width="400" height="240" fill="url(#placa)"/>
-    <path class="traza base" pathLength="1" d="M170 68V52L140 22H96"/>
-    <path class="traza base" pathLength="1" d="M180 68V46L166 32V0"/>
-    <path class="traza base" pathLength="1" d="M190 68V0"/>
-    <path class="traza base" pathLength="1" d="M200 68V30"/>
-    <path class="traza base" pathLength="1" d="M210 68V0"/>
-    <path class="traza base" pathLength="1" d="M220 68V46L234 32V0"/>
-    <path class="traza base" pathLength="1" d="M230 68V52L260 22H304"/>
-    <path class="traza base" pathLength="1" d="M148 90H120L96 66H40"/>
-    <path class="traza base" pathLength="1" d="M148 100H70L50 80V44"/>
-    <path class="traza base" pathLength="1" d="M148 110H0"/>
-    <path class="traza base" pathLength="1" d="M148 120H108"/>
-    <path class="traza base" pathLength="1" d="M92 120H0"/>
-    <path class="traza base" pathLength="1" d="M148 130H0"/>
-    <path class="traza base" pathLength="1" d="M148 140H70L50 160V196"/>
-    <path class="traza base" pathLength="1" d="M148 150H120L96 174H40"/>
-    <path class="traza base" pathLength="1" d="M252 90H280L304 66H360"/>
-    <path class="traza base" pathLength="1" d="M252 100H330L350 80V44"/>
-    <path class="traza base" pathLength="1" d="M252 110H400"/>
-    <path class="traza base" pathLength="1" d="M252 120H292"/>
-    <path class="traza base" pathLength="1" d="M308 120H400"/>
-    <path class="traza base" pathLength="1" d="M252 130H400"/>
-    <path class="traza base" pathLength="1" d="M252 140H330L350 160V196"/>
-    <path class="traza base" pathLength="1" d="M252 150H280L304 174H360"/>
-    <path class="traza base" pathLength="1" d="M170 172V188L140 218H96"/>
-    <path class="traza base" pathLength="1" d="M180 172V194L166 208V240"/>
-    <path class="traza base" pathLength="1" d="M190 172V240"/>
-    <path class="traza base" pathLength="1" d="M200 172V210"/>
-    <path class="traza base" pathLength="1" d="M210 172V240"/>
-    <path class="traza base" pathLength="1" d="M220 172V194L234 208V240"/>
-    <path class="traza base" pathLength="1" d="M230 172V188L260 218H304"/>
-    <path class="traza cobre" pathLength="1" d="M170 68V52L140 22H96"/>
-    <path class="traza cobre" pathLength="1" d="M180 68V46L166 32V0"/>
-    <path class="traza cobre" pathLength="1" d="M190 68V0"/>
-    <path class="traza cobre" pathLength="1" d="M200 68V30"/>
-    <path class="traza cobre" pathLength="1" d="M210 68V0"/>
-    <path class="traza cobre" pathLength="1" d="M220 68V46L234 32V0"/>
-    <path class="traza cobre" pathLength="1" d="M230 68V52L260 22H304"/>
-    <path class="traza cobre" pathLength="1" d="M148 90H120L96 66H40"/>
-    <path class="traza cobre" pathLength="1" d="M148 100H70L50 80V44"/>
-    <path class="traza cobre" pathLength="1" d="M148 110H0"/>
-    <path class="traza cobre" pathLength="1" d="M148 120H108"/>
-    <path class="traza cobre" pathLength="1" d="M92 120H0"/>
-    <path class="traza cobre" pathLength="1" d="M148 130H0"/>
-    <path class="traza cobre" pathLength="1" d="M148 140H70L50 160V196"/>
-    <path class="traza cobre" pathLength="1" d="M148 150H120L96 174H40"/>
-    <path class="traza cobre" pathLength="1" d="M252 90H280L304 66H360"/>
-    <path class="traza cobre" pathLength="1" d="M252 100H330L350 80V44"/>
-    <path class="traza cobre" pathLength="1" d="M252 110H400"/>
-    <path class="traza cobre" pathLength="1" d="M252 120H292"/>
-    <path class="traza cobre" pathLength="1" d="M308 120H400"/>
-    <path class="traza cobre" pathLength="1" d="M252 130H400"/>
-    <path class="traza cobre" pathLength="1" d="M252 140H330L350 160V196"/>
-    <path class="traza cobre" pathLength="1" d="M252 150H280L304 174H360"/>
-    <path class="traza cobre" pathLength="1" d="M170 172V188L140 218H96"/>
-    <path class="traza cobre" pathLength="1" d="M180 172V194L166 208V240"/>
-    <path class="traza cobre" pathLength="1" d="M190 172V240"/>
-    <path class="traza cobre" pathLength="1" d="M200 172V210"/>
-    <path class="traza cobre" pathLength="1" d="M210 172V240"/>
-    <path class="traza cobre" pathLength="1" d="M220 172V194L234 208V240"/>
-    <path class="traza cobre" pathLength="1" d="M230 172V188L260 218H304"/>
-    <path class="pulso" pathLength="1" d="M170 68V52L140 22H96" style="animation-delay:1.3s;animation-duration:2.6s"/>
-    <path class="pulso" pathLength="1" d="M200 68V30" style="animation-delay:2.4000000000000004s;animation-duration:2.4s"/>
-    <path class="pulso" pathLength="1" d="M230 68V52L260 22H304" style="animation-delay:1.9s;animation-duration:2.8s"/>
-    <path class="pulso" pathLength="1" d="M148 90H120L96 66H40" style="animation-delay:3.1s;animation-duration:2.6s"/>
-    <path class="pulso" pathLength="1" d="M148 110H0" style="animation-delay:1.6s;animation-duration:3.0s"/>
-    <path class="pulso" pathLength="1" d="M148 140H70L50 160V196" style="animation-delay:3.5s;animation-duration:2.6s"/>
-    <path class="pulso" pathLength="1" d="M252 90H280L304 66H360" style="animation-delay:2.2s;animation-duration:2.6s"/>
-    <path class="pulso" pathLength="1" d="M252 110H400" style="animation-delay:2.8s;animation-duration:3.0s"/>
-    <path class="pulso" pathLength="1" d="M252 140H330L350 160V196" style="animation-delay:1.5s;animation-duration:2.6s"/>
-    <path class="pulso" pathLength="1" d="M252 150H280L304 174H360" style="animation-delay:3.9000000000000004s;animation-duration:2.4s"/>
-    <path class="pulso" pathLength="1" d="M170 172V188L140 218H96" style="animation-delay:2.6s;animation-duration:2.8s"/>
-    <path class="pulso" pathLength="1" d="M190 172V240" style="animation-delay:3.3s;animation-duration:3.0s"/>
-    <path class="pulso" pathLength="1" d="M230 172V188L260 218H304" style="animation-delay:2.0s;animation-duration:2.6s"/>
-    <path class="pulso" pathLength="1" d="M92 120H0" style="animation-delay:4.2s;animation-duration:2.2s"/>
-    <path class="pulso" pathLength="1" d="M308 120H400" style="animation-delay:4.6s;animation-duration:2.2s"/>
-    <circle class="pad" cx="92" cy="22" r="4.6"/>
-    <circle class="hoyo" cx="92" cy="22" r="1.6"/>
-    <circle class="pad" cx="200" cy="26" r="4.6"/>
-    <circle class="hoyo" cx="200" cy="26" r="1.6"/>
-    <circle class="pad" cx="308" cy="22" r="4.6"/>
-    <circle class="hoyo" cx="308" cy="22" r="1.6"/>
-    <circle class="pad" cx="36" cy="66" r="4.6"/>
-    <circle class="hoyo" cx="36" cy="66" r="1.6"/>
-    <circle class="pad" cx="50" cy="40" r="4.6"/>
-    <circle class="hoyo" cx="50" cy="40" r="1.6"/>
-    <circle class="pad" cx="50" cy="200" r="4.6"/>
-    <circle class="hoyo" cx="50" cy="200" r="1.6"/>
-    <circle class="pad" cx="36" cy="174" r="4.6"/>
-    <circle class="hoyo" cx="36" cy="174" r="1.6"/>
-    <circle class="pad" cx="364" cy="66" r="4.6"/>
-    <circle class="hoyo" cx="364" cy="66" r="1.6"/>
-    <circle class="pad" cx="350" cy="40" r="4.6"/>
-    <circle class="hoyo" cx="350" cy="40" r="1.6"/>
-    <circle class="pad" cx="350" cy="200" r="4.6"/>
-    <circle class="hoyo" cx="350" cy="200" r="1.6"/>
-    <circle class="pad" cx="364" cy="174" r="4.6"/>
-    <circle class="hoyo" cx="364" cy="174" r="1.6"/>
-    <circle class="pad" cx="92" cy="218" r="4.6"/>
-    <circle class="hoyo" cx="92" cy="218" r="1.6"/>
-    <circle class="pad" cx="200" cy="214" r="4.6"/>
-    <circle class="hoyo" cx="200" cy="214" r="1.6"/>
-    <circle class="pad" cx="308" cy="218" r="4.6"/>
-    <circle class="hoyo" cx="308" cy="218" r="1.6"/>
-    <circle class="pad" cx="120" cy="110" r="2.8"/>
-    <circle class="hoyo" cx="120" cy="110" r="1"/>
-    <circle class="pad" cx="280" cy="110" r="2.8"/>
-    <circle class="hoyo" cx="280" cy="110" r="1"/>
-    <circle class="pad" cx="76" cy="130" r="2.8"/>
-    <circle class="hoyo" cx="76" cy="130" r="1"/>
-    <circle class="pad" cx="324" cy="130" r="2.8"/>
-    <circle class="hoyo" cx="324" cy="130" r="1"/>
-    <circle class="pad" cx="190" cy="30" r="2.8"/>
-    <circle class="hoyo" cx="190" cy="30" r="1"/>
-    <circle class="pad" cx="210" cy="210" r="2.8"/>
-    <circle class="hoyo" cx="210" cy="210" r="1"/>
-    <circle class="pad" cx="140" cy="46" r="2.8"/>
-    <circle class="hoyo" cx="140" cy="46" r="1"/>
-    <circle class="pad" cx="260" cy="194" r="2.8"/>
-    <circle class="hoyo" cx="260" cy="194" r="1"/>
-    <circle class="pad" cx="30" cy="110" r="2.8"/>
-    <circle class="hoyo" cx="30" cy="110" r="1"/>
-    <circle class="pad" cx="370" cy="130" r="2.8"/>
-    <circle class="hoyo" cx="370" cy="130" r="1"/>
-    <rect class="comp" x="92" y="115" width="16" height="10" rx="1.5"/>
-    <rect class="pin" x="92" y="115" width="3" height="10" rx="1"/>
-    <rect class="pin" x="105" y="115" width="3" height="10" rx="1"/>
-    <rect class="comp" x="292" y="115" width="16" height="10" rx="1.5"/>
-    <rect class="pin" x="292" y="115" width="3" height="10" rx="1"/>
-    <rect class="pin" x="305" y="115" width="3" height="10" rx="1"/>
-    <rect class="pin" x="19.0" y="5" width="3" height="6" rx="0.8"/>
-    <rect class="pin" x="19.0" y="23" width="3" height="6" rx="0.8"/>
-    <rect class="pin" x="25.5" y="5" width="3" height="6" rx="0.8"/>
-    <rect class="pin" x="25.5" y="23" width="3" height="6" rx="0.8"/>
-    <rect class="pin" x="32.0" y="5" width="3" height="6" rx="0.8"/>
-    <rect class="pin" x="32.0" y="23" width="3" height="6" rx="0.8"/>
-    <rect class="comp" x="14" y="10" width="26" height="14" rx="1.5"/>
-    <rect class="pin" x="365.0" y="5" width="3" height="6" rx="0.8"/>
-    <rect class="pin" x="365.0" y="23" width="3" height="6" rx="0.8"/>
-    <rect class="pin" x="371.5" y="5" width="3" height="6" rx="0.8"/>
-    <rect class="pin" x="371.5" y="23" width="3" height="6" rx="0.8"/>
-    <rect class="pin" x="378.0" y="5" width="3" height="6" rx="0.8"/>
-    <rect class="pin" x="378.0" y="23" width="3" height="6" rx="0.8"/>
-    <rect class="comp" x="360" y="10" width="26" height="14" rx="1.5"/>
-    <rect class="pin" x="19.0" y="211" width="3" height="6" rx="0.8"/>
-    <rect class="pin" x="19.0" y="229" width="3" height="6" rx="0.8"/>
-    <rect class="pin" x="25.5" y="211" width="3" height="6" rx="0.8"/>
-    <rect class="pin" x="25.5" y="229" width="3" height="6" rx="0.8"/>
-    <rect class="pin" x="32.0" y="211" width="3" height="6" rx="0.8"/>
-    <rect class="pin" x="32.0" y="229" width="3" height="6" rx="0.8"/>
-    <rect class="comp" x="14" y="216" width="26" height="14" rx="1.5"/>
-    <rect class="pin" x="365.0" y="211" width="3" height="6" rx="0.8"/>
-    <rect class="pin" x="365.0" y="229" width="3" height="6" rx="0.8"/>
-    <rect class="pin" x="371.5" y="211" width="3" height="6" rx="0.8"/>
-    <rect class="pin" x="371.5" y="229" width="3" height="6" rx="0.8"/>
-    <rect class="pin" x="378.0" y="211" width="3" height="6" rx="0.8"/>
-    <rect class="pin" x="378.0" y="229" width="3" height="6" rx="0.8"/>
-    <rect class="comp" x="360" y="216" width="26" height="14" rx="1.5"/>
-    <rect class="comp" x="112" y="190" width="8" height="12" rx="1.5"/>
-    <rect class="pin" x="112" y="190" width="8" height="3" rx="1"/>
-    <rect class="pin" x="112" y="199" width="8" height="3" rx="1"/>
-    <rect class="comp" x="280" y="38" width="8" height="12" rx="1.5"/>
-    <rect class="pin" x="280" y="38" width="8" height="3" rx="1"/>
-    <rect class="pin" x="280" y="47" width="8" height="3" rx="1"/>
-    <rect class="comp" x="120" y="38" width="8" height="12" rx="1.5"/>
-    <rect class="pin" x="120" y="38" width="8" height="3" rx="1"/>
-    <rect class="pin" x="120" y="47" width="8" height="3" rx="1"/>
-    <rect class="comp" x="272" y="190" width="8" height="12" rx="1.5"/>
-    <rect class="pin" x="272" y="190" width="8" height="3" rx="1"/>
-    <rect class="pin" x="272" y="199" width="8" height="3" rx="1"/>
-    <rect class="pin" x="168" y="68" width="4" height="10" rx="1"/>
-    <rect class="pin" x="168" y="162" width="4" height="10" rx="1"/>
-    <rect class="pin" x="178" y="68" width="4" height="10" rx="1"/>
-    <rect class="pin" x="178" y="162" width="4" height="10" rx="1"/>
-    <rect class="pin" x="188" y="68" width="4" height="10" rx="1"/>
-    <rect class="pin" x="188" y="162" width="4" height="10" rx="1"/>
-    <rect class="pin" x="198" y="68" width="4" height="10" rx="1"/>
-    <rect class="pin" x="198" y="162" width="4" height="10" rx="1"/>
-    <rect class="pin" x="208" y="68" width="4" height="10" rx="1"/>
-    <rect class="pin" x="208" y="162" width="4" height="10" rx="1"/>
-    <rect class="pin" x="218" y="68" width="4" height="10" rx="1"/>
-    <rect class="pin" x="218" y="162" width="4" height="10" rx="1"/>
-    <rect class="pin" x="228" y="68" width="4" height="10" rx="1"/>
-    <rect class="pin" x="228" y="162" width="4" height="10" rx="1"/>
-    <rect class="pin" x="148" y="88" width="10" height="4" rx="1"/>
-    <rect class="pin" x="242" y="88" width="10" height="4" rx="1"/>
-    <rect class="pin" x="148" y="98" width="10" height="4" rx="1"/>
-    <rect class="pin" x="242" y="98" width="10" height="4" rx="1"/>
-    <rect class="pin" x="148" y="108" width="10" height="4" rx="1"/>
-    <rect class="pin" x="242" y="108" width="10" height="4" rx="1"/>
-    <rect class="pin" x="148" y="118" width="10" height="4" rx="1"/>
-    <rect class="pin" x="242" y="118" width="10" height="4" rx="1"/>
-    <rect class="pin" x="148" y="128" width="10" height="4" rx="1"/>
-    <rect class="pin" x="242" y="128" width="10" height="4" rx="1"/>
-    <rect class="pin" x="148" y="138" width="10" height="4" rx="1"/>
-    <rect class="pin" x="242" y="138" width="10" height="4" rx="1"/>
-    <rect class="pin" x="148" y="148" width="10" height="4" rx="1"/>
-    <rect class="pin" x="242" y="148" width="10" height="4" rx="1"/>
-    <rect class="chip" x="158" y="78" width="84" height="84" rx="4" filter="url(#sombra)"/>
-    <path class="bisel" d="M162 80.5H238"/>
-    <circle class="marca" cx="167" cy="87" r="2"/>
-    <g transform="translate(200 121) scale(0.36) translate(-186 -152)">
-    <path class="letra" d="M100 105V180L120 200L140 180L160 200L180 180V143L203 120M140 180V140"/>
-    <path class="letra" d="M272 116L257 105H218L203 120V185L218 200H257L272 185V160H244"/>
-    <path class="pulso letra-pulso" pathLength="1" d="M100 105V180L120 200L140 180L160 200L180 180V143L203 120V185L218 200H257L272 185V160H244" style="animation-delay:2.2s;animation-duration:3.6s"/>
-    <circle class="pad-letra" cx="100" cy="105" r="7"/>
-    <circle class="hoyo" cx="100" cy="105" r="2.6"/>
-    <circle class="pad-letra" cx="140" cy="140" r="7"/>
-    <circle class="hoyo" cx="140" cy="140" r="2.6"/>
-    <circle class="pad-letra" cx="272" cy="116" r="7"/>
-    <circle class="hoyo" cx="272" cy="116" r="2.6"/>
-    <circle class="pad-letra" cx="244" cy="160" r="7"/>
-    <circle class="hoyo" cx="244" cy="160" r="2.6"/>
-    </g>
-    </svg>
+  <main class="contenido">
+    <h1 id="nombre" class="entra" style="--i:0">Waldo Gallardo</h1>
+    <p class="profesion entra" id="profesion" style="--i:1">Ingeniero Civil Eléctrico</p>
 
-  <header>
-    <h1 id="nombre">Waldo Gallardo</h1>
-    <p class="profesion" id="profesion">Ingeniero Civil Eléctrico</p>
-    <p class="credencial">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
-      <span id="credencial">Instalador eléctrico autorizado SEC, clase A</span>
-    </p>
-  </header>
+    <div class="grupo">
+      <a class="accion sello entra" style="--i:2" id="btn-sec" href="#" target="_blank" rel="noopener">
+        <span class="icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+        <span class="textos"><span class="titulo">Instalador autorizado SEC</span><span class="detalle">Clase A · Toca para verificar</span></span>
+        <svg class="flecha" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+      </a>
+      <p class="nota entra" style="--i:3" id="nota-sec">En el validador, búscalo como Gallardo Vega.</p>
+    </div>
 
-  <nav class="acciones" aria-label="Contacto">
-    <a class="boton principal" id="btn-whatsapp" href="#" target="_blank" rel="noopener">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></svg>
-      Escribir por WhatsApp
-    </a>
-    <a class="boton" id="btn-llamar" href="#">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
-      Llamar
-    </a>
-    <a class="boton" id="btn-contacto" href="contacto.vcf" download="Waldo-Gallardo.vcf">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
-      Guardar contacto
-    </a>
-    <a class="boton ancho" id="btn-correo" href="#" hidden>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
-      Enviar correo
-    </a>
-    <a class="boton" id="btn-linkedin" href="#" target="_blank" rel="noopener" hidden>LinkedIn</a>
-    <a class="boton" id="btn-instagram" href="#" target="_blank" rel="noopener" hidden>Instagram</a>
-  </nav>
+    <nav class="grupo" aria-label="Contacto">
+      <a class="accion principal entra" style="--i:3" id="btn-whatsapp" href="#" target="_blank" rel="noopener">
+        <span class="icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></svg></span>
+        <svg class="pista" aria-hidden="true"><rect class="base" x="0" y="0" width="100%" height="100%" rx="16"/><rect class="viva" pathLength="1" x="0" y="0" width="100%" height="100%" rx="16"/><rect class="senal" pathLength="1" x="0" y="0" width="100%" height="100%" rx="16"/></svg>
+        <span class="soldadura" aria-hidden="true"></span>
+        <span class="textos"><span class="titulo">Escribir por WhatsApp</span><span class="detalle" id="det-wa">+56 9 5131 8794</span></span>
+        <svg class="flecha" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+      <a class="accion entra" style="--i:5" id="btn-contacto" href="contacto.vcf" download="Waldo-Gallardo.vcf">
+        <span class="icono"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></span>
+        <span class="textos"><span class="titulo">Guardar contacto</span><span class="detalle">Agrégalo a tu agenda</span></span>
+        <svg class="flecha" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+      <a class="accion entra" style="--i:6" id="btn-correo" href="#" hidden>
+        <span class="icono"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg></span>
+        <span class="textos"><span class="titulo">Enviar correo</span><span class="detalle" id="det-correo"></span></span>
+        <svg class="flecha" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+      <a class="accion entra" style="--i:7" id="btn-linkedin" href="#" target="_blank" rel="noopener" hidden>
+        <span class="icono"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/></svg></span>
+        <span class="textos"><span class="titulo">LinkedIn</span><span class="detalle">Perfil profesional</span></span>
+        <svg class="flecha" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+      </a>
+      <a class="accion entra" style="--i:8" id="btn-instagram" href="#" target="_blank" rel="noopener" hidden>
+        <span class="icono"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6"/></svg></span>
+        <span class="textos"><span class="titulo">Instagram</span><span class="detalle">Proyectos y trabajos</span></span>
+        <svg class="flecha" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+      </a>
 
-  <section aria-labelledby="t-licencia">
-    <h2 id="t-licencia">Licencia SEC</h2>
-    <p class="texto">Puedes confirmar que su licencia está vigente en el buscador oficial de instaladores de la Superintendencia de Electricidad y Combustibles.</p>
-    <a class="boton" id="btn-sec" href="#" target="_blank" rel="noopener" style="width:100%">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
-      Verificar en la SEC
-    </a>
-  </section>
+      <details class="accion entra" style="--i:9" id="seccion-transferencia" hidden>
+        <summary>
+          <span class="icono"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg></span>
+          <span class="textos"><span class="titulo">Datos para transferir</span><span class="detalle">Toca para verlos y copiarlos</span></span>
+          <svg class="flecha" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </summary>
+        <dl class="datos" id="datos"></dl>
+        <button class="copiar" id="btn-copiar" type="button">Copiar datos</button>
+      </details>
+    </nav>
 
-  <section aria-labelledby="t-transferencia" id="seccion-transferencia" hidden>
-    <h2 id="t-transferencia">Pagos</h2>
-    <details>
-      <summary>
-        Ver datos para transferir
-        <svg class="flecha" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-      </summary>
-      <dl class="datos" id="datos"></dl>
-      <button class="boton copiar" id="btn-copiar" type="button">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        Copiar datos
+    <div class="pie entra" style="--i:10">
+      <button class="compartir" id="btn-compartir" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4M12 2v13"/></svg>
+        Compartir tarjeta
       </button>
-    </details>
-  </section>
-
-  <footer>
-    <button class="enlace-texto" id="btn-compartir" type="button">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
-      Compartir esta tarjeta
-    </button>
-  </footer>
-</main>
+    </div>
+  </main>
+</div>
 
 <div class="aviso" id="aviso" role="status" aria-live="polite"></div>
 
@@ -483,17 +507,16 @@ footer { margin-top: 48px; display: flex; flex-direction: column; align-items: f
   const t = TARJETA;
   const $ = (id) => document.getElementById(id);
 
-  // Textos
   $("nombre").textContent = t.nombre;
   $("profesion").textContent = t.profesion;
-  $("credencial").textContent = t.credencial;
   document.title = t.nombre + " · " + t.profesion;
 
-  // Contacto
   const numero = t.telefono.replace(/[^\d]/g, "");
   $("btn-whatsapp").href = "https://wa.me/" + numero + (t.mensajeWhatsapp ? "?text=" + encodeURIComponent(t.mensajeWhatsapp) : "");
-  $("btn-llamar").href = "tel:" + t.telefono;
-  $("btn-llamar").setAttribute("aria-label", "Llamar al " + t.telefonoVisible);
+  $("det-wa").textContent = t.telefonoVisible;
+  $("btn-sec").href = t.verificarSEC;
+  if (t.apellidosSEC) $("nota-sec").textContent = "En el validador, búscalo como " + t.apellidosSEC + ".";
+  else $("nota-sec").hidden = true;
 
   function mostrar(id, href) {
     if (!href) return;
@@ -501,17 +524,10 @@ footer { margin-top: 48px; display: flex; flex-direction: column; align-items: f
     $(id).hidden = false;
   }
   mostrar("btn-correo", t.correo ? "mailto:" + t.correo : "");
+  if (t.correo) $("det-correo").textContent = t.correo;
   mostrar("btn-linkedin", t.linkedin);
   mostrar("btn-instagram", t.instagram);
-  // Si solo hay una red social, que ocupe todo el ancho
-  if (!t.linkedin !== !t.instagram) {
-    $(t.linkedin ? "btn-linkedin" : "btn-instagram").classList.add("ancho");
-  }
 
-  // Licencia
-  $("btn-sec").href = t.verificarSEC;
-
-  // Transferencia
   const tr = t.transferencia;
   if (tr && tr.numeroCuenta) {
     const filas = [
@@ -531,7 +547,6 @@ footer { margin-top: 48px; display: flex; flex-direction: column; align-items: f
     });
   }
 
-  // Compartir
   $("btn-compartir").addEventListener("click", async () => {
     const datos = { title: t.nombre, text: t.nombre + " · " + t.profesion, url: location.href };
     if (navigator.share) {
@@ -541,7 +556,6 @@ footer { margin-top: 48px; display: flex; flex-direction: column; align-items: f
     }
   });
 
-  // Utilidades
   function avisar(msg) {
     const a = $("aviso");
     a.textContent = msg;
